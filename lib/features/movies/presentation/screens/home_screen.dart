@@ -15,7 +15,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => sl<MoviesBloc>()
-      ..add(GetNowPlayingMoviesEvent(),),
+      ..add(GetNowPlayingMoviesEvent())
+      ..add(GetPopularMoviesEvent())
+      ..add(GetTopRatedMoviesEvent()),
+
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.backgroundColor,
