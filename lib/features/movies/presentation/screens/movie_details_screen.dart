@@ -11,29 +11,29 @@ class MoviesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // قائمة بيانات وهمية (Mock Data) لدعم الديناميكية
-    final List<MovieModel> movies = [
-      MovieModel(
+    final List<MovieDetailsModel> movies = [
+      MovieDetailsModel(
         title: "Demon Slayer - Kimetsu no Yaiba",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2020",
         rating: 4.2,
         description: "Tanjiro Kamado, joined with Inosuke Hashibira, a boy raised by boars who...",
       ),
-      MovieModel(
+      MovieDetailsModel(
         title: "Hotel Transylvania: Transformania",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2022",
         rating: 3.5,
         description: "When Van Helsing's mysterious invention, the 'Monsterification Ray', goes haywire, ...",
       ),
-      MovieModel(
+      MovieDetailsModel(
         title: "Moonbound",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2021",
         rating: 3.0,
         description: "When Peter sets out on a magical journey to rescue his little sister Anne, he needs t...",
       ),
-      MovieModel(
+      MovieDetailsModel(
         title: "Chip 'n Dale: Rescue Rangers",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2022",
@@ -41,21 +41,21 @@ class MoviesListScreen extends StatelessWidget {
         description: "Decades since their successful television series was canceled, Chip has ...",
       ),
 
-       MovieModel(
+       MovieDetailsModel(
         title: "Chip 'n Dale: Rescue Rangers",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2022",
         rating: 3.6,
         description: "Decades since their successful television series was canceled, Chip has ...",
       ),
-       MovieModel(
+       MovieDetailsModel(
         title: "Chip 'n Dale: Rescue Rangers",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2022",
         rating: 3.6,
         description: "Decades since their successful television series was canceled, Chip has ...",
       ),
-       MovieModel(
+       MovieDetailsModel(
         title: "Chip 'n Dale: Rescue Rangers",
         imageUrl: "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
         year: "2022",
@@ -89,7 +89,7 @@ class MoviesListScreen extends StatelessWidget {
         ),
         body: ListView.builder(
           itemCount: movies.length,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           itemBuilder: (context, index) {
             return CustomMovieCard(movie: movies[index]);
           },

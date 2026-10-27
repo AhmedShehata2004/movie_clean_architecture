@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NowPlayingItem extends StatelessWidget {
-  const NowPlayingItem({super.key});
-
+  const NowPlayingItem({super.key,});
   @override
   Widget build(BuildContext context) {
     return Container(
