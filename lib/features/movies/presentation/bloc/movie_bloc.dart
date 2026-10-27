@@ -6,9 +6,9 @@ import 'package:movie_app/features/movies/domain/usecases/get_now_playing_movies
 import 'package:movie_app/features/movies/presentation/bloc/movie_events.dart';
 import 'package:movie_app/features/movies/presentation/bloc/movie_states.dart';
 
-class MovieBloc extends Bloc<MoviesEvent, MoviesState> {
+class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   final GetNowPlayingMoviesUsecase getNowPlayingMoviesUsecase;
-  MovieBloc(this.getNowPlayingMoviesUsecase) : super(const MoviesState()) {
+  MoviesBloc(this.getNowPlayingMoviesUsecase) : super(const MoviesState()) {
     on<GetNowPlayingMoviesEvent>(_getNowPlayingMovies);
   }
 
@@ -19,6 +19,9 @@ class MovieBloc extends Bloc<MoviesEvent, MoviesState> {
     final result = await getNowPlayingMoviesUsecase(const NoParameters());
     result.fold(
       (failure) => emit(
+        // copyWith method is used to create a new state with updated values while keeping the other values unchanged.
+        // donot use moviestate constructor directly because it will reset the other values to their default values.
+        // copywith better than constructor because it will keep the other values unchanged. and donot make new state with default values.
         state.copyWith(
           nowPlayingState: RequestState.error,
           nowPlayingMessage: failure.message,
