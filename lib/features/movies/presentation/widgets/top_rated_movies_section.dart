@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/features/movies/presentation/screens/movie_details_screen.dart';
 
 class TopRatedMoviesSection extends StatelessWidget {
   const TopRatedMoviesSection({super.key});
@@ -7,25 +8,52 @@ class TopRatedMoviesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "TopRated Movies",
-                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text(
-                "See More",
-                style: TextStyle(color: Colors.white,fontSize: 16,),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          MoviesListScreen(screenTitle: "TopRated Movies"),
+                    ),
+                  );
+
+                  // Handle "See More" tap
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      "See More",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
         SizedBox(height: 16),
         SizedBox(
-          height: 160,
+          height: 200,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 8,
