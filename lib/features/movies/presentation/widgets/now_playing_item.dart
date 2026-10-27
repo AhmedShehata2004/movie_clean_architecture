@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/utils/app_constance.dart';
+import 'package:movie_app/features/movies/domain/entities/movie.dart';
 
 class NowPlayingItem extends StatelessWidget {
-  const NowPlayingItem({super.key,});
+  const NowPlayingItem({super.key, required this.movie});
+  final Movie movie;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +16,7 @@ class NowPlayingItem extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Image.network(
-              "https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
+               AppConstance.imageUrl(movie.imageUrl),
               fit: BoxFit.fill,
             ),
 
@@ -63,9 +66,9 @@ class NowPlayingItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     // اسم الفيلم
-                    const Text(
-                      "The Bad Guys",
-                      style: TextStyle(
+                    Text(
+                      movie.title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
