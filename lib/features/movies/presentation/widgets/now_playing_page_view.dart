@@ -7,7 +7,7 @@ class NowPlayingPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400,
+      height: 350,
       child: PageView.builder(
         itemCount: 6,
         itemBuilder: (context, index) {
