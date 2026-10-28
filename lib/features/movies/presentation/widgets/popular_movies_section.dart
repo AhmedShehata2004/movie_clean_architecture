@@ -4,7 +4,7 @@ import 'package:movie_app/core/utils/app_constance.dart';
 import 'package:movie_app/core/utils/enums.dart';
 import 'package:movie_app/features/movies/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movies/presentation/bloc/movie_states.dart';
-import 'package:movie_app/features/movies/presentation/screens/movie_details_screen.dart';
+import 'package:movie_app/features/movies/presentation/screens/movies_list_screen.dart';
 
 class PopularMoviesSection extends StatelessWidget {
   const PopularMoviesSection({super.key});
@@ -41,6 +41,7 @@ class PopularMoviesSection extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => MoviesListScreen(
                                 screenTitle: "Popular Movies",
+                                movieModel: state.popularMovies,
                               ),
                             ),
                           );

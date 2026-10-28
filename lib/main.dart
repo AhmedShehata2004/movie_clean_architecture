@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/features/movies/presentation/screens/home_screen.dart';
+import 'package:movie_app/features/movies/presentation/screens/movie_details_screen.dart';
 
 void main() {
   DevicePreview.enable();
@@ -16,7 +17,7 @@ class MovieApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  HomeScreen(),
+      home:  MovieDetailsScreen(),
     );
   }
 }

@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/movies/data/models/movie_details_model.dart';
+import 'package:movie_app/core/utils/app_constance.dart';
+import 'package:movie_app/features/movies/domain/entities/movie.dart';
 
 class CustomMovieCard extends StatelessWidget {
-  final MovieDetailsModel movie;
+  final Movie movie;
 
   const CustomMovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130, // ارتفاع ثابت ومناسب للبطاقة الأفقية
+      height: 130,
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E), // لون خلفية الكارد الرمادي الغامق
+        color: const Color(0xFF1E1E1E),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         children: [
-          // بوستر الفيلم على اليسار
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               bottomLeft: Radius.circular(16),
             ),
             child: Image.network(
-              movie.imageUrl,
+              AppConstance.imageUrl(movie.imageUrl),
               width: 95,
               height: 130,
               fit: BoxFit.cover,
@@ -38,7 +38,6 @@ class CustomMovieCard extends StatelessWidget {
             ),
           ),
 
-          // تفاصيل الفيلم على اليمين
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -46,7 +45,6 @@ class CustomMovieCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // اسم الفيلم
                   Text(
                     movie.title,
                     style: const TextStyle(
@@ -59,18 +57,19 @@ class CustomMovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // صف السنة والتقييم (Year & Rating)
                   Row(
                     children: [
-                      // صندوق السنة (Red Badge)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.red[700],
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          movie.year,
+                          movie.releaseDate.split('-')[0],
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 11,
@@ -80,11 +79,10 @@ class CustomMovieCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
 
-                      // التقييم مع النجمة
                       const Icon(Icons.star, color: Colors.amber, size: 16),
                       const SizedBox(width: 4),
                       Text(
-                        movie.rating.toString(),
+                        movie.voteAverage.toStringAsFixed(1),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -95,13 +93,9 @@ class CustomMovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // وصف مختصر للفيلم
                   Text(
-                    movie.description,
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 12,
-                    ),
+                    movie.overview,
+                    style: TextStyle(color: Colors.grey[400], fontSize: 12),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

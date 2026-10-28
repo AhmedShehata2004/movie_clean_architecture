@@ -4,7 +4,7 @@ import 'package:movie_app/core/utils/app_constance.dart';
 import 'package:movie_app/core/utils/enums.dart';
 import 'package:movie_app/features/movies/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movies/presentation/bloc/movie_states.dart';
-import 'package:movie_app/features/movies/presentation/screens/movie_details_screen.dart';
+import 'package:movie_app/features/movies/presentation/screens/movies_list_screen.dart';
 
 class TopRatedMoviesSection extends StatelessWidget {
   const TopRatedMoviesSection({super.key});
@@ -42,11 +42,10 @@ class TopRatedMoviesSection extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => MoviesListScreen(
                                 screenTitle: "TopRated Movies",
+                                movieModel: state.topRatedMovies,
                               ),
                             ),
                           );
-
-                          // Handle "See More" tap
                         },
                         child: Row(
                           children: [
