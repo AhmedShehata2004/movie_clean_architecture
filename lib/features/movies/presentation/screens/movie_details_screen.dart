@@ -15,8 +15,10 @@ class MovieDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          sl<MovieDatailsBloc>()..add(GetMovieDetailsEvent(movieId)),
+      create: (context) => sl<MovieDatailsBloc>()
+        ..add(GetMovieDetailsEvent(movieId))
+        ..add(GetRecommendationMovieEvent(movieId)),
+
       child: Scaffold(
         backgroundColor: const Color(0xFF1E1E28),
         body: BlocBuilder<MovieDatailsBloc, MovieDetailsStates>(
@@ -90,16 +92,32 @@ class MovieDetailsScreen extends StatelessWidget {
                             Text(
                               state.movieDetail!.genres
                                   .map((genre) => genre.name)
-                                  .join(' , '),                      
+                                  .join(' , '),
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 13,
                               ),
                             ),
                             const SizedBox(height: 24),
-                            RecommendationsSection(),
                           ],
                         ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: BlocBuilder<MovieDatailsBloc, MovieDetailsStates>(
+                        builder: (context, state) {
+                          switch (state.recommendationMoviesState) {
+                            case RequestState.isloading:
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            case RequestState.isloaded:
+                              return RecommendationsSection(recommendationMovies:state.recommendationMovies);
+                             case RequestState.error:
+                             return Center(child: Text(state.movieDetailsMessage));
+
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -114,11 +132,7 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 
-
-
-
   Widget _buildMovieInfoRow(MovieDetails movieDetails) {
-
     return Row(
       children: [
         Container(
@@ -127,21 +141,21 @@ class MovieDetailsScreen extends StatelessWidget {
             color: Colors.grey[800],
             borderRadius: BorderRadius.circular(4),
           ),
-          child:  Text(
-           movieDetails.releaseDate , // سنة الإنتاج
+          child: Text(
+            movieDetails.releaseDate, // سنة الإنتاج
             style: TextStyle(color: Colors.white, fontSize: 12),
           ),
         ),
         const SizedBox(width: 12),
         const Icon(Icons.star, color: Colors.amber, size: 18),
         const SizedBox(width: 4),
-         Text(
-         movieDetails.voteAverage.toStringAsFixed(1) , // التقييم
+        Text(
+          movieDetails.voteAverage.toStringAsFixed(1), // التقييم
           style: TextStyle(color: Colors.white, fontSize: 13),
         ),
         const SizedBox(width: 16),
-         Text(
-         movieDetails.runtime.toString() ,
+        Text(
+          movieDetails.runtime.toString(),
           style: TextStyle(color: Colors.grey, fontSize: 13),
         ),
       ],

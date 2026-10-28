@@ -1,20 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/features/movies/data/models/movie_details_model.dart';
 import 'package:movie_app/features/movies/data/models/movie_model.dart';
+import 'package:movie_app/features/movies/data/models/recommendation_model.dart';
 import 'package:movie_app/features/movies/domain/entities/movie_details.dart';
 import 'package:movie_app/features/movies/domain/usecases/get_movie_details.dart';
+import 'package:movie_app/features/movies/domain/usecases/get_recommendation_movies.dart';
 
 abstract class BaseMovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
   Future<List<MovieModel>> getPopularMovies();
-  Future<List<MovieModel>> getTopRatedMovies();   
-  Future<MovieDetails>getMovieDetails(MovieDetailsParameters parameter);
+  Future<List<MovieModel>> getTopRatedMovies();
+  Future<MovieDetails> getMovieDetails(MovieDetailsParameters parameter);
+  Future<List<RecommendationModel>> getRecommendationMovies(
+    RecommendationMoiveParameters parameter,
+  );
 }
 
 class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
   String token =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNjEzNzI3MGRlZjEzYmZkNTczM2RhOGI0ZmE4NDUwMiIsIm5iZiI6MTc5MzEwMjczOS44MzYsInN1YiI6IjZhZTA5MzkzYWE3ODAwYmRlYmQ1OGM5OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4tai11HrQhJO-SownPOdljX40mHg0T8iG97DOmaZH3M";
-  
+
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
     final response = await Dio().get(
@@ -37,7 +42,7 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
   }
 
   @override
-  Future<List<MovieModel>> getPopularMovies() async{
+  Future<List<MovieModel>> getPopularMovies() async {
     final response = await Dio().get(
       'https://api.themoviedb.org/3/movie/popular',
       options: Options(
@@ -83,8 +88,8 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
   وعندما تقوم بكتابته مباشرة داخل الـ String هكذا ($parameter)
   فإن دارت (Dart) تقوم باستدعاء دالة toString() الخاصة بالكائن بدلاً من استخراج الـ ID فقط (مثل رقم الفيلم مثلاً 550
    */
-    @override 
-   Future<MovieDetails> getMovieDetails(MovieDetailsParameters parameter)async {
+  @override
+  Future<MovieDetails> getMovieDetails(MovieDetailsParameters parameter) async {
     final response = await Dio().get(
       'https://api.themoviedb.org/3/movie/${parameter.movieId}',
       options: Options(
@@ -95,16 +100,37 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
       ),
     );
     if (response.statusCode == 200) {
-      return MovieDetailsModel.fromJson(response.data) ;
+      return MovieDetailsModel.fromJson(response.data);
     } else {
-      print('Failed to load MovieDetails for movie num $parameter  : ${response.statusCode}');
+      print(
+        'Failed to load MovieDetails for movie num $parameter  : ${response.statusCode}',
+      );
       throw Exception('Failed to load MovieDetails for movie num $parameter ');
     }
   }
- 
- 
 
- 
+  @override
+  Future<List<RecommendationModel>> getRecommendationMovies(
+    RecommendationMoiveParameters parameter,
+  ) async {
+    final response = await Dio().get(
+      'https://api.themoviedb.org/3/movie/${parameter.movieId}/recommendations',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return List<RecommendationModel>.from(
+        (response.data["results"] as List).map((e) => RecommendationModel.fromJson(e)),
+      );
+    } else {
+      print(
+        'Failed to load MovieDetails for movie num $parameter  : ${response.statusCode}',
+      );
+      throw Exception('Failed to load MovieDetails for movie num $parameter ');
+    }
+  }
 }
-
-
