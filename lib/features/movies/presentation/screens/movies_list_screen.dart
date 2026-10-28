@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/utils/app_colors.dart';
 import 'package:movie_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_app/features/movies/presentation/screens/movie_details_screen.dart';
 import 'package:movie_app/features/movies/presentation/widgets/movie_details_card.dart';
 
 class MoviesListScreen extends StatelessWidget {
@@ -44,7 +45,16 @@ class MoviesListScreen extends StatelessWidget {
           itemCount: movieModel.length,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           itemBuilder: (context, index) {
-            return CustomMovieCard(movie: movieModel[index]);
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      MovieDetailsScreen(movieId: movieModel[index].id),
+                ),
+              ),
+              child: CustomMovieCard(movie: movieModel[index]),
+            );
           },
         ),
       ),

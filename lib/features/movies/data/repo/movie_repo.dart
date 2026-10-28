@@ -3,7 +3,9 @@ import 'package:movie_app/core/error/exception.dart';
 import 'package:movie_app/core/error/failure.dart';
 import 'package:movie_app/features/movies/data/datasource/movie_data_source.dart';
 import 'package:movie_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_app/features/movies/domain/entities/movie_details.dart';
 import 'package:movie_app/features/movies/domain/repo/base_movie_repo.dart';
+import 'package:movie_app/features/movies/domain/usecases/get_movie_details.dart';
 
 class MovieRepo extends BaseMovieRepo {
   final BaseMovieRemoteDataSource baseMovieRemoteDataSource;
@@ -37,4 +39,16 @@ class MovieRepo extends BaseMovieRepo {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, MovieDetails>> getMovieDetails(MovieDetailsParameters parameters) async{
+    final result = await baseMovieRemoteDataSource.getMovieDetails(parameters);
+    try {
+       return Right(result);
+    }  on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  
 }
